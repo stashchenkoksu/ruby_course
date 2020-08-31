@@ -9,7 +9,7 @@ class Route
   def initialize(start_station, end_station)
     @start_station = start_station
     @end_station = end_station
-    self.register_instance
+    register_instance
     @inner_stations = [start_station, end_station]
   end
 

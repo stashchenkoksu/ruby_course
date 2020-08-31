@@ -12,20 +12,19 @@ class Station
     @station_name = station_name
     @trains = []
     @@all_created_stations << self
-    self.register_instance
+    register_instance
     puts "Build station #{station_name}"
   end
 
   def self.all
-    puts "------------------"
-    puts "   All stations"
-    puts "------------------"
-    all_created_stations.each_with_index do |station, index|
+    puts '------------------'
+    puts '   All stations'
+    puts '------------------'
+    all_created_stations.each_with_index do |_station, index|
       puts "#{index}) station.station_name"
     end
-    puts "------------------"
+    puts '------------------'
   end
-
 
   def arrive_train train
     puts "On station #{station_name} arrives train №#{train.number}"

@@ -2,10 +2,9 @@ require_relative 'route'
 require_relative 'station'
 require_relative 'wagon'
 require_relative 'creator'
-require_relative 'instance_counter'   
+require_relative 'instance_counter'
 
 class Train
-  
   include Creator
   include InstanceCounter
   attr_reader :number, :type
@@ -26,9 +25,9 @@ class Train
 
   def self.find train_number
     @@all_trains.each do |train|
-     return train if train.number == train_number
+      return train if train.number == train_number
     end
-    return nil
+    nil
   end
 
   def speed_up
@@ -42,7 +41,6 @@ class Train
     speed = 0 if speed.negative?
   end
 
-  
   def attech_track track
     if speed.zero?
       tracks << track
@@ -52,7 +50,7 @@ class Train
     end
   end
 
-  def unhook_track track 
+  def unhook_track track
     if speed.zero?
       if tracks.size.positive?
         tracks.delete(track)
@@ -110,20 +108,18 @@ class Train
     end
   end
 
- def show_tracks
-      puts "All wagons of train №#{number}"
-      puts "----------"
-      tracks.each_with_index do |track, index|
-        puts "#{index}) Number: #{track.number} | type: #{type} | manufactor: #{track.creator_name}"
-      end
-      puts "----------"
+  def show_tracks
+    puts "All wagons of train №#{number}"
+    puts '----------'
+    tracks.each_with_index do |track, index|
+      puts "#{index}) Number: #{track.number} | type: #{type} | manufactor: #{track.creator_name}"
     end
+    puts '----------'
+     end
 
   protected
-    def speed_const
-      20
-    end
 
-   
-
+  def speed_const
+    20
+  end
 end
