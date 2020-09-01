@@ -21,7 +21,7 @@ class Route
   end
 
   def delete_station station
-    rescue "You can't removethe first and the last stations" if [inner_stations.first, inner_stations.last].include?(station)
+    raise "You can't removethe first and the last stations" if [inner_stations.first, inner_stations.last].include?(station)
     inner_stations.delete(station)
   end
 

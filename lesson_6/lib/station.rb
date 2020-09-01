@@ -42,7 +42,7 @@ class Station
   end
 
   def leave_station(train_number)
-  rescue "train with such number doesn't exists" if Train.find(train_number).nil?
+  raise "train with such number doesn't exists" if Train.find(train_number).nil?
     trains.delete(Train.find(train_number))
   end
 

@@ -61,7 +61,6 @@ class Controller
         puts "Error: #{e.message}"
         retry
       end
-
       stations << station
       puts 'Station added succesful!'
       print 'Do you want to add another station (Yes: enter 1/ No: enter 0)?'
@@ -70,7 +69,6 @@ class Controller
     end
     rescue RuntimeError => e
       puts "Ошибка: #{e.message}"
-    end
    end
 
   def create_trains
@@ -94,32 +92,24 @@ class Controller
       print 'Do you want to create another train? (Yes: enter 1/ No: enter 0)?'
       answer = gets.chomp.to_i
       break if answer.zero?
-      rescue RuntimeError => e
-        puts "Ошибка: #{e.message}"
-      end
     end
-   end
-
+  end
+   
   def create_routs
     puts 'You choose to create route'
-
     print_all_stations
     puts 'Choose the number of first station of new route'
     first_station = gets.chomp.to_i
     puts 'Choose the number last station of new route'
     last_station = gets.chomp.to_i
-    if first_station.between?(1, stations.size) && last_station.between?(1, stations.size)
-      new_route = Route.new(stations[first_station - 1], stations[last_station - 1])
-    else
-      puts "Station, wich you input doesn't exists"
-      return
-        end
+    raise "Station, wich you input doesn't exists" if !(first_station.between?(1, stations.size) && last_station.between?(1, stations.size))
+    new_route = Route.new(stations[first_station - 1], stations[last_station - 1])
     inner_stations_controller(new_route)
     routs << new_route
     rescue RuntimeError => e
       puts "Ошибка: #{e.message}"
-    end
-   end
+  end
+  
 
   def inner_stations_controller new_route
     puts 'you can add inner stations in your route'
@@ -135,8 +125,7 @@ class Controller
     end
     rescue RuntimeError => e
       puts "Ошибка: #{e.message}"
-    end
-   end
+  end
 
   def assign_route
     puts 'You choose to assign route for the train'
@@ -151,7 +140,6 @@ class Controller
     train.add_route(new_route)
     rescue RuntimeError => e
       puts "Ошибка: #{e.message}"
-    end
    end
 
   def add_wagon
@@ -172,7 +160,6 @@ class Controller
     end
     rescue RuntimeError => e
       puts "Ошибка: #{e.message}"
-    end
    end
 
   def unhook_wagon
@@ -185,14 +172,12 @@ class Controller
       number = gets.chomp.to_i
       raise 'you entered incorrect data of wagon' if !number.between?(1, train.tracks.size)
       train.unhook_track(train.tracks[number - 1])
-      end
       puts 'Do you whant to remoove another wagon to the train (yes: enter 1/ no: enter 0)'
       answer = gets.chomp.to_i
       break if answer.zero?
     end
     rescue RuntimeError => e
       puts "Ошибка: #{e.message}"
-    end
    end
 
   def moove_train
@@ -204,7 +189,6 @@ class Controller
     choice.positive? ? train.moove_to_the_next_statioin : train.moove_to_the_previous_station
     rescue RuntimeError => e
       puts "Ошибка: #{e.message}"
-    end
    end
 
   def station_list
@@ -219,7 +203,6 @@ class Controller
     station.show_train_type_of
     rescue RuntimeError => e
       puts "Ошибка: #{e.message}"
-    end
   end
 
   def choose_train
@@ -230,8 +213,6 @@ class Controller
     Train.find(number)
     rescue RuntimeError => e
       puts "Ошибка: #{e.message}"
-      nil
-    end
   end
 
   def print_all_train
@@ -244,6 +225,16 @@ class Controller
     end
     puts '------------------'
    end
+
+   def print_all_stations
+    puts "------------------"
+    puts "   All stations"
+    puts "------------------"
+    stations.each_with_index do |station, index|
+      puts "#{index+1}. #{station.station_name}"
+    end
+    puts "------------------"
+  end
 
   def print_all_routs
     puts '------------------'
@@ -258,4 +249,5 @@ class Controller
     end
     puts '------------------'
    end
+
 end
