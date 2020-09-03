@@ -1,6 +1,6 @@
 class PassengerWagon < Wagon
-	attr_accessor :free
-	attr_reader :amount_of_seats
+  attr_accessor :free
+  attr_reader :amount_of_seats
   def initialize amount_of_seats
     super()
     @amount_of_seats = amount_of_seats
@@ -9,13 +9,14 @@ class PassengerWagon < Wagon
   end
 
   def filled
-  	return amount_of_seats - free
+    amount_of_seats - free
   end
 
   def take_a_seat
-  	raise 'All places are already taken' if free.zero?
-  	@empty_seats -= 1
+    raise 'All places are already taken' if free.zero?
+
+    @empty_seats -= 1
   rescue RuntimeError => e
-  	puts "Exeption: #{e.message}"
+    puts "Exeption: #{e.message}"
   end
 end

@@ -1,8 +1,8 @@
 module Valid
-	def valid?
-		valid!
-		true
-	rescue
-		false
-	end
+  def valid?
+    valid!
+    true
+  rescue StandardError
+    false
+  end
 end

@@ -1,6 +1,6 @@
 class CargoWagon < Wagon
-	attr_accessor :free
-	attr_reader :volume
+  attr_accessor :free
+  attr_reader :volume
   def initialize volume
     super()
     @volume = volume
@@ -9,14 +9,14 @@ class CargoWagon < Wagon
   end
 
   def fill_space(amount)
-  	raise "No free space for such volume" if !(free - amount).positive?
+    raise 'No free space for such volume' unless (free - amount).positive?
 
-  	@free -= amount
+    @free -= amount
   rescue RuntimeError => e
-  	puts "Exeption: #{e.message}"
+    puts "Exeption: #{e.message}"
   end
 
   def filled
-  	return volume - free
+    volume - free
   end
 end

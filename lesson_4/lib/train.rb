@@ -25,7 +25,6 @@ class Train
     speed = 0 if speed.negative?
   end
 
-  
   def attech_track track
     if speed.zero?
       tracks << track
@@ -35,7 +34,7 @@ class Train
     end
   end
 
-  def unhook_track track 
+  def unhook_track track
     if speed.zero?
       if tracks.size.positive?
         tracks.delete(track)
@@ -93,20 +92,18 @@ class Train
     end
   end
 
- def show_tracks
-      puts "All wagons of train №#{number}"
-      puts "----------"
-      tracks.each_with_index do |track, index|
-        puts "#{index}) Number: #{track.number} | type: #{type}"
-      end
-      puts "----------"
+  def show_tracks
+    puts "All wagons of train №#{number}"
+    puts '----------'
+    tracks.each_with_index do |track, index|
+      puts "#{index}) Number: #{track.number} | type: #{type}"
     end
+    puts '----------'
+     end
 
   protected
-    def speed_const
-      20
-    end
 
-   
-
+  def speed_const
+    20
+  end
 end

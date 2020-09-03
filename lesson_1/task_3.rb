@@ -1,20 +1,20 @@
-#triangle type
- 
-def is_triangle?(a,b,c)
-  return a + b > c && b + c > a && a + c > b
+# triangle type
+
+def is_triangle?(a, b, c)
+  a + b > c && b + c > a && a + c > b
 end
- 
-def get_type(a,b,c)
+
+def get_type(a, b, c)
   equilateral = false
   isosceles = false
   rectangular = false
- 
-  if (a==b && b==c)
+
+  if a == b && b == c
     equilateral = true
     longest = a
     other1 = b
     other2 = c
-  elsif b>a && b > c
+  elsif b > a && b > c
     longest = b
     other1 = a
     other2 = c
@@ -23,27 +23,22 @@ def get_type(a,b,c)
     other1 = a
     other2 = b
   end
- 
-  if (longest**2 == other1**2 + other2**2)
-    rectangular = true
-  end
-  if(other1 == other2)
-    isosceles =true
-  end
- 
-  puts "equilateral - " + equilateral.to_s
-  puts "isosceles - " + isosceles.to_s
-  puts "rectangular - " + rectangular.to_s
- 
+
+  rectangular = true if longest**2 == other1**2 + other2**2
+  isosceles = true if other1 == other2
+
+  puts 'equilateral - ' + equilateral.to_s
+  puts 'isosceles - ' + isosceles.to_s
+  puts 'rectangular - ' + rectangular.to_s
 end
- 
-puts "Enter the sides of triangle"
+
+puts 'Enter the sides of triangle'
 a = STDIN.gets.chomp.to_i
 b = STDIN.gets.chomp.to_i
 c = STDIN.gets.chomp.to_i
- 
-if is_triangle?(a,b,c)
-  get_type(a,b,c)
+
+if is_triangle?(a, b, c)
+  get_type(a, b, c)
 else
   puts "you can't make a triangle with such sides"
 end

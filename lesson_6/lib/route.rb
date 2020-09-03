@@ -21,7 +21,10 @@ class Route
   end
 
   def delete_station station
-    raise "You can't removethe first and the last stations" if [inner_stations.first, inner_stations.last].include?(station)
+    if [inner_stations.first, inner_stations.last].include?(station)
+      raise "You can't removethe first and the last stations"
+    end
+
     inner_stations.delete(station)
   end
 
@@ -30,6 +33,7 @@ class Route
   end
 
   private
+
   def valid!
     raise 'No start station' if start_station.nil?
     raise 'No finish station' if end_station.nil?

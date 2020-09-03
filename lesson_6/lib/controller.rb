@@ -54,9 +54,9 @@ class Controller
     puts 'You choose to add station'
     loop do
       begin
-      print 'Enter station name: '
-      station_name = gets.chomp
-      station = Station.new(station_name)
+        print 'Enter station name: '
+        station_name = gets.chomp
+        station = Station.new(station_name)
       rescue Exception => e
         puts "Error: #{e.message}"
         retry
@@ -67,19 +67,19 @@ class Controller
       answer = gets.chomp.to_i
       break if answer.zero?
     end
-    rescue RuntimeError => e
-      puts "Ошибка: #{e.message}"
+  rescue RuntimeError => e
+    puts "Ошибка: #{e.message}"
    end
 
   def create_trains
     puts 'You choose to create the train'
     loop do
       begin
-      puts "Indicate the type of train. Available trains: #{TRAINS_TYPES.keys}"
-      type = gets.chomp.to_sym
-      print 'Enter the number of train: '
-      number = gets.chomp.to_i
-      train = Train.new(number, type)
+        puts "Indicate the type of train. Available trains: #{TRAINS_TYPES.keys}"
+        type = gets.chomp.to_sym
+        print 'Enter the number of train: '
+        number = gets.chomp.to_i
+        train = Train.new(number, type)
       rescue Exception => e
         puts "Error: #{e.message}"
         retry
@@ -94,7 +94,7 @@ class Controller
       break if answer.zero?
     end
   end
-   
+
   def create_routs
     puts 'You choose to create route'
     print_all_stations
@@ -102,14 +102,16 @@ class Controller
     first_station = gets.chomp.to_i
     puts 'Choose the number last station of new route'
     last_station = gets.chomp.to_i
-    raise "Station, wich you input doesn't exists" if !(first_station.between?(1, stations.size) && last_station.between?(1, stations.size))
+    unless first_station.between?(1, stations.size) && last_station.between?(1, stations.size)
+      raise "Station, wich you input doesn't exists"
+    end
+
     new_route = Route.new(stations[first_station - 1], stations[last_station - 1])
     inner_stations_controller(new_route)
     routs << new_route
-    rescue RuntimeError => e
-      puts "Ошибка: #{e.message}"
+  rescue RuntimeError => e
+    puts "Ошибка: #{e.message}"
   end
-  
 
   def inner_stations_controller new_route
     puts 'you can add inner stations in your route'
@@ -123,8 +125,8 @@ class Controller
       inner_station = gets.chomp.to_i
       answer == 1 ? new_route.add_station(stations[inner_station - 1]) : new_route.delete_station(stations[inner_station - 1])
     end
-    rescue RuntimeError => e
-      puts "Ошибка: #{e.message}"
+  rescue RuntimeError => e
+    puts "Ошибка: #{e.message}"
   end
 
   def assign_route
@@ -135,17 +137,19 @@ class Controller
     puts 'Choose number route for assigning'
     print_all_routs
     choice = gets.chomp.to_i
-    raise 'You entered incorrect data of route' if !choice.between?(1, routs.size)
+    raise 'You entered incorrect data of route' unless choice.between?(1, routs.size)
+
     new_route = routs[choice - 1]
     train.add_route(new_route)
-    rescue RuntimeError => e
-      puts "Ошибка: #{e.message}"
+  rescue RuntimeError => e
+    puts "Ошибка: #{e.message}"
    end
 
   def add_wagon
     puts 'You choose to add wagon to train'
     train = choose_train
     return if train.nil?
+
     loop do
       wagon = WAGONS_TYPES[train.type.to_sym].new
       print 'Enter manufactor name:'
@@ -158,37 +162,40 @@ class Controller
       answer = gets.chomp.to_i
       break if answer.zero?
     end
-    rescue RuntimeError => e
-      puts "Ошибка: #{e.message}"
+  rescue RuntimeError => e
+    puts "Ошибка: #{e.message}"
    end
 
   def unhook_wagon
     puts 'You choose to add wagon to train'
     train = choose_train
     return if train.nil?
+
     loop do
       puts 'choose a wagon to remove:'
       train.show_tracks
       number = gets.chomp.to_i
-      raise 'you entered incorrect data of wagon' if !number.between?(1, train.tracks.size)
+      raise 'you entered incorrect data of wagon' unless number.between?(1, train.tracks.size)
+
       train.unhook_track(train.tracks[number - 1])
       puts 'Do you whant to remoove another wagon to the train (yes: enter 1/ no: enter 0)'
       answer = gets.chomp.to_i
       break if answer.zero?
     end
-    rescue RuntimeError => e
-      puts "Ошибка: #{e.message}"
+  rescue RuntimeError => e
+    puts "Ошибка: #{e.message}"
    end
 
   def moove_train
     puts 'You choose to moove train'
     train = choose_train
     return if train.nil?
+
     puts 'Where do you want to go forward or backward?(1/-1)'
     choice = STDIN.gets.chomp.to_i
     choice.positive? ? train.moove_to_the_next_statioin : train.moove_to_the_previous_station
-    rescue RuntimeError => e
-      puts "Ошибка: #{e.message}"
+  rescue RuntimeError => e
+    puts "Ошибка: #{e.message}"
    end
 
   def station_list
@@ -196,13 +203,15 @@ class Controller
     puts 'Would you like to see train list at the specific station(yes: enter 1/ no: enter 0)?'
     choice = STDIN.gets.chomp.to_i
     return if choice.zero?
+
     puts 'Choose a station number'
     choice = STDIN.gets.chomp.to_i
-    raise 'You entered incorrect data!' if !choice.between?(1, stations.size)
+    raise 'You entered incorrect data!' unless choice.between?(1, stations.size)
+
     station = stations[choice - 1]
     station.show_train_type_of
-    rescue RuntimeError => e
-      puts "Ошибка: #{e.message}"
+  rescue RuntimeError => e
+    puts "Ошибка: #{e.message}"
   end
 
   def choose_train
@@ -210,9 +219,10 @@ class Controller
     print 'Choose the nunber of train for manage: '
     number = gets.chomp.to_i
     raise 'you entered incorrect data of train' if Train.find(number).nil?
+
     Train.find(number)
-    rescue RuntimeError => e
-      puts "Ошибка: #{e.message}"
+  rescue RuntimeError => e
+    puts "Ошибка: #{e.message}"
   end
 
   def print_all_train
@@ -226,15 +236,15 @@ class Controller
     puts '------------------'
    end
 
-   def print_all_stations
-    puts "------------------"
-    puts "   All stations"
-    puts "------------------"
+  def print_all_stations
+    puts '------------------'
+    puts '   All stations'
+    puts '------------------'
     stations.each_with_index do |station, index|
-      puts "#{index+1}. #{station.station_name}"
+      puts "#{index + 1}. #{station.station_name}"
     end
-    puts "------------------"
-  end
+    puts '------------------'
+ end
 
   def print_all_routs
     puts '------------------'
@@ -249,5 +259,4 @@ class Controller
     end
     puts '------------------'
    end
-
 end

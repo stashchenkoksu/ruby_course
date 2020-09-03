@@ -7,6 +7,4 @@ class Wagon
     @number = @@serial_number
     @@serial_number += 1
   end
-
-  private 
 end

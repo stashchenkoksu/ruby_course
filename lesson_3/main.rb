@@ -20,9 +20,9 @@ route_kr1_sci.delete_station(station_gkl)
 route_kr1_sci.station_list
 
 train1 = Train.new(1, 'passenger', 12)
-train2 = Train.new(2, "cargo", 20)
-train3 = Train.new(3,"passenger", 14)
-train4 = Train.new(4, "cargo", 22)
+train2 = Train.new(2, 'cargo', 20)
+train3 = Train.new(3, 'passenger', 14)
+train4 = Train.new(4, 'cargo', 22)
 
 train1.add_route(route_kr1_sci)
 
@@ -38,8 +38,8 @@ station_tps.arrive_train(train2)
 station_tps.arrive_train(train3)
 station_tps.arrive_train(train4)
 
-station_tps.show_train_type_of("cargo")
-station_tps.show_train_type_of("passenger")
+station_tps.show_train_type_of('cargo')
+station_tps.show_train_type_of('passenger')
 
 puts train1.current_station.station_name
 train1.moove_to_the_next_statioin

@@ -3,7 +3,7 @@ require_relative 'station'
 require_relative 'wagon'
 require_relative 'creator'
 require_relative 'instance_counter'
-require_relative "valid"
+require_relative 'valid'
 
 class Train
   include Valid
@@ -26,9 +26,7 @@ class Train
     puts "Created train № #{number}. Type: #{type}. Tracks amount: #{tracks.size}."
   end
 
-  TRAIN_NUMBER = /^[a-zA-Z0-9]{3}-?[a-zA-Z0-9]{2}$/i
-
- 
+  TRAIN_NUMBER = /^[a-zA-Z0-9]{3}-?[a-zA-Z0-9]{2}$/i.freeze
 
   def self.find train_number
     @@all_trains.each do |train|
@@ -47,12 +45,14 @@ class Train
   end
 
   def attech_track track
-    raise 'train is mooving! you can\'t attach tracks' if !speed.zero?
+    raise 'train is mooving! you can\'t attach tracks' unless speed.zero?
+
     tracks << track
   end
 
   def unhook_track track
-    raise 'train is mooving! you can\'t attach tracks' if !speed.zero?
+    raise 'train is mooving! you can\'t attach tracks' unless speed.zero?
+
     raise 'you can\'t unhook wagon, this train doesn\'t have any'
     tracks.delete(track)
     puts "amount of tracks : #{tracks.size}"
@@ -74,8 +74,11 @@ class Train
   end
 
   def moove_to_the_next_statioin
-    raise"this train doesn't have a route yet" if route.nil?
-    raise "You can't go to the next station, this train is alredy on the last station" if current_station == route.end_station
+    raise "this train doesn't have a route yet" if route.nil?
+    if current_station == route.end_station
+      raise "You can't go to the next station, this train is alredy on the last station"
+    end
+
     current_station.leave_station(number)
     self.current_station = route.inner_stations[route.inner_stations.index(current_station) + 1]
     current_station.arrive_train self
@@ -83,8 +86,11 @@ class Train
   end
 
   def moove_to_the_previous_station
-    raise"this train doesn't have a route yet" if route.nil?
-    raise "You can't go to the previous station, this train is alredy on the first station" if current_station == route.end_station
+    raise "this train doesn't have a route yet" if route.nil?
+    if current_station == route.end_station
+      raise "You can't go to the previous station, this train is alredy on the first station"
+    end
+
     current_station&.leave_station(number)
     self.current_station = route.inner_stations[(route.inner_stations.index(current_station) - 1)]
     current_station.arrive_train self
@@ -103,9 +109,9 @@ class Train
   protected
 
   def valid!
-    raise "No train number" if number.nil?
-    raise "No train type" if type.nil?
-    raise "Invalid format of train number(*****/***-**)" if number.to_s !~ TRAIN_NUMBER
+    raise 'No train number' if number.nil?
+    raise 'No train type' if type.nil?
+    raise 'Invalid format of train number(*****/***-**)' if number.to_s !~ TRAIN_NUMBER
     raise "Поезд № #{number} уже существует" unless Train.find(number).nil?
   end
 

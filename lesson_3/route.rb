@@ -15,7 +15,7 @@ class Route
     inner_stations.insert(-2, station)
   end
 
-  def delete_station station
+  def delete_station(station)
     if [inner_stations.first, inner_stations.last].include?(station)
       puts "You can't removethe first and the last stations"
     else
