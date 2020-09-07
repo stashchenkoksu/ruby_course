@@ -10,6 +10,9 @@
 - **lesson 4** Interfaces, inheritance and polymorphism
 - **lesson 5** Class Methods, Modules, and the Ruby Object Model
 - **lesson 6** Exceptions
+- **lesson 7** Blocks, Proc and lambda
+- **lesson 8** Ruby idioms and good style
+
 
 
 # Course summary

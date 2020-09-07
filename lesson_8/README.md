@@ -1,0 +1,15 @@
+# Tasks for the eighth lesson (Ruby idioms and good style)
+
+Продолжить задание с 7 урока.
+
+Просмотреть код своего проекта и попробовать применить рассмотренные идиомы там, где это возможно.
+Изучить Ruby Style Guide (ссылка в материалах к уроку). Рекомендую знакомиться с английским вариантом, а русский использовать только для непонятных мест.
+Посмотреть мастер-класс "Почему код должен быть стильным" (ссылка в материалах к уроку)
+Установить rubocop и проанализировать свой проект с его помощью
+Исправить все ошибки (кроме отсутствия документации), которые выдаст rubocop. То, что он не сможет исправить в автоматическом режиме, исправить вручную. Залить исправленные версии на гитхаб.
+
+*Stashchenko Kseniya**
+
+- Github: [https://github.com/stashchenkoksu](https://github.com/stashchenkoksu)
+- Telegram: [https://t.me/StashchenkoKseniya](https://t.me/StashchenkoKseniya)
+- Linkedin: [https://www.linkedin.com/in/stashchenkokseniya/](https://www.linkedin.com/in/stashchenkokseniya/)
